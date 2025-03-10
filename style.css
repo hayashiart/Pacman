@@ -1,0 +1,759 @@
+/* style.css */
+/* Sets the base styling for the entire document */
+html {
+    height: 100%;             /* Full viewport height */
+    margin: 0;                /* Remove default margins */
+    padding: 0;               /* Remove default padding */
+}
+body {
+    margin: 0;                    /* Removes default margin to ensure content uses full space */
+    padding: 0;                   /* Removes default padding for precise control over layout */
+    height: 100vh;                /* Sets height to 100% of viewport height for full-screen coverage */
+    overflow: hidden;             /* Prevents scrolling to maintain a fixed game-like interface */
+    font-family: "Jaro";          /* Applies Jaro font globally for consistency */
+    background: url('images/fondecran1.jpg') no-repeat center top fixed; /* Fixes background image globally */
+    background-size: cover;       /* Scales image to cover entire viewport, stays fixed on page switch */
+    text-transform: uppercase;    /* Makes all text uppercase per requirement */
+    font-weight: bold;            /* Makes all text bold per requirement */
+}
+
+/* Positions the burger menu in the top-left corner */
+#burgerMenu {
+    position: fixed;              /* Fixes position relative to viewport for constant visibility */
+    top: 20px;                    /* Sets 20px from top for spacing */
+    left: 0;                      /* Aligns to left edge of viewport */
+    z-index: 30;                  /* High z-index ensures it stays above most content */
+}
+
+/* Styles the burger menu icon */
+.burger-icon {
+    width: 40px;                  /* Sets width to 40px for a compact clickable area */
+    height: 30px;                 /* Sets height to 30px to fit three bars */
+    cursor: pointer;              /* Changes cursor to pointer to indicate interactivity */
+    display: flex;                /* Uses flexbox to arrange bars vertically */
+    flex-direction: column;       /* Stacks bars in a column */
+    justify-content: space-between; /* Distributes bars evenly within height */
+    margin-left: 20px;            /* Adds 20px left margin for spacing from edge */
+    position: relative;           /* Allows z-index to work within parent */
+    z-index: 35;                  /* Higher z-index than .menu-panel to stay clickable */
+}
+
+/* Styles each bar in the burger icon */
+.burger-icon span {
+    width: 100%;                  /* Makes each bar span full width of container (40px) */
+    height: 4px;                  /* Sets bar thickness to 4px for visibility */
+    background-color: white;      /* Uses white for contrast against dark backgrounds */
+    border-radius: 2px;           /* Rounds edges slightly for a softer look */
+    transition: all 0.3s ease;    /* Smoothly animates transformations when menu opens/closes */
+}
+
+/* Transforms top bar into top part of X when menu opens */
+#burgerMenu.open .burger-icon span:nth-child(1) {
+    transform: translateY(13px) rotate(45deg); /* Moves bar down 13px and rotates 45° to form X */
+}
+
+/* Hides middle bar when menu opens */
+#burgerMenu.open .burger-icon span:nth-child(2) {
+    opacity: 0;                   /* Fades out middle bar to complete X shape */
+}
+
+/* Transforms bottom bar into bottom part of X when menu opens */
+#burgerMenu.open .burger-icon span:nth-child(3) {
+    transform: translateY(-13px) rotate(-45deg); /* Moves bar up 13px and rotates -45° to form X */
+}
+
+/* Styles the burger menu panel with a stylish Pac-Man design */
+.menu-panel {
+    position: fixed;              /* Fixes position to slide in/out without affecting layout */
+    top: 0;                       /* Aligns to top of viewport */
+    left: -300px;                 /* Hides off-screen to left (250px width + 20px padding) */
+    width: 250px;                 /* Sets fixed width for menu content */
+    height: 100%;                 /* Spans full viewport height */
+    background: linear-gradient(135deg, rgba(202, 181, 113, 0.9), rgba(0, 0, 0, 0.8)); /* Gradient from #CAB571 to black */
+    border-right: 5px solid #FFD700; /* Adds a gold (#FFD700) border for Pac-Man flair */
+    padding: 60px 20px 20px;      /* Adds padding: 60px top (below icon), 20px sides/bottom */
+    display: flex;                /* Uses flexbox to stack buttons vertically */
+    flex-direction: column;       /* Arranges buttons in a column */
+    transition: left 0.3s ease;   /* Smoothly animates sliding in/out */
+    z-index: 25;                  /* Below .burger-icon to keep icon clickable */
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.5); /* Adds a glowing gold shadow for style */
+}
+
+/* Slides burger menu into view when open */
+#burgerMenu.open .menu-panel {
+    left: 0;                      /* Moves panel to left edge of viewport to become visible */
+}
+
+/* Styles buttons inside burger menu */
+.menu-panel button {
+    margin: 10px 0;               /* Adds 10px vertical margin between buttons */
+    padding: 12px;                /* Sets 12px padding for a comfortable click area */
+    font-size: 18px;              /* Uses 18px font for readability on desktop */
+    font-family: "Jaro";          /* Uses Jaro font */
+    color: white;                 /* Sets text to white */
+    background-color: rgb(202, 181, 113); /* Uses #CAB571 at 100% opacity */
+    border: none;                 /* Removes default border */
+    border-radius: 5px;           /* Rounds corners for a softer appearance */
+    cursor: pointer;              /* Indicates interactivity with pointer cursor */
+    transition: background-color 0.2s, transform 0.2s; /* Smoothly changes background and scale on hover */
+    text-transform: uppercase;    /* Ensures uppercase text */
+    font-weight: bold;            /* Ensures bold text */
+}
+
+/* Hover effect for burger menu buttons */
+.menu-panel button:hover {
+    background-color: rgba(255, 215, 0, 0.8); /* Changes to a gold (#FFD700) hue on hover */
+    transform: scale(1.05);       /* Slightly enlarges button for feedback */
+}
+
+/* Styles the main screen - visible by default */
+#mainScreen {
+    position: absolute;           /* Layers over other elements for full control */
+    top: 0;                       /* Aligns to top of viewport */
+    left: 0;                      /* Aligns to left of viewport */
+    width: 100%;                  /* Spans full viewport width */
+    height: 100%;                 /* Spans full viewport height */
+    display: flex;                /* Visible by default, no !important so JS can override */
+    flex-direction: column;       /* Stacks title and buttons vertically */
+    justify-content: center;      /* Centers content vertically */
+    align-items: center;          /* Centers content horizontally */
+    z-index: 10;                  /* Places above game container but below menus */
+    padding-top: 10%;             /* Moves buttons and title higher on desktop */
+    padding-bottom: 0;            /* Removes bottom padding */
+}
+
+/* Styles the main screen title with a Pac-Man universe flair */
+#mainScreen h1 {
+    color: white;                 /* White text */
+    text-shadow: 4px 4px 8px #FFD700, -4px -4px 8px #FFD700; /* Double gold shadow for arcade glow */
+    font-size: 4rem;              /* Reduced from 7rem to 4rem to avoid overlap */
+    margin-bottom: 2rem;          /* Reduced spacing below title */
+    position: absolute;           /* Positions independently */
+    top: 20%;                     /* Moved up from 20% to 10% for higher placement */
+    font-family: "Press Start 2P", "Jaro"; /* Uses retro arcade font, falls back to Jaro */
+    text-transform: uppercase;    /* Ensures uppercase */
+    font-weight: bold;            /* Ensures bold */
+    letter-spacing: 4px;          /* Adds spacing for a classic game title look */
+}
+
+/* Styles buttons on main screen */
+#mainScreen button {
+    width: 20rem;                 /* Sets width to 20rem (~320px) for desktop */
+    padding: 1rem;                /* Adds 1rem (~16px) padding for click area */
+    margin: 0.5rem;               /* Adds 0.5rem (~8px) vertical margin between buttons */
+    font-size: 1.5rem;            /* Sets font to 1.5rem (~24px) for readability */
+    font-family: "Jaro";          /* Uses Jaro font */
+    color: white;                 /* White text */
+    background-color: rgb(202, 181, 113); /* Uses #CAB571 at 100% opacity */
+    border: none;                 /* Removes default border */
+    border-radius: 10px;          /* Rounds corners for soft look */
+    cursor: pointer;              /* Indicates interactivity */
+    box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5); /* Adds shadow for depth */
+    transition: transform 0.2s, background-color 0.2s; /* Smooth hover effects */
+    text-transform: uppercase;    /* Ensures uppercase text */
+    font-weight: bold;            /* Ensures bold text */
+}
+
+/* Hover effect for main screen buttons */
+#mainScreen button:hover {
+    transform: scale(1.05);       /* Slightly enlarges button for feedback */
+    background-color: rgba(255, 215, 0, 0.8); /* Changes to gold (#FFD700) on hover */
+}
+
+/* Styles the game container - hidden by default */
+#gameContainer {
+    display: none;                /* Hidden by default, no !important so JS can override */
+    position: absolute;           /* Layers over other elements */
+    top: 0;                       /* Aligns to top of viewport */
+    left: 0;                      /* Aligns to left of viewport */
+    width: 100%;                  /* Spans full viewport width */
+    height: 100vh;                /* Uses full viewport height */
+    flex-direction: column;       /* Matches other pages for consistency */
+    justify-content: center;      /* Centers content vertically */
+    align-items: center;          /* Centers content horizontally */
+    padding: 1rem;                /* Adds 1rem (~16px) padding around canvas */
+    box-sizing: border-box;       /* Includes padding in height calculation */
+    z-index: 10;                  /* Matches #mainScreen z-index for layering */
+}
+
+/* Styles the game canvas */
+#gameCanvas {
+    box-shadow: 10px 10px 20px black; /* Adds shadow for depth */
+    background-color: transparent; /* Allows body background to show through */
+    max-width: 100%;              /* Ensures canvas fits container width */
+    max-height: 100%;             /* Ensures canvas fits container height */
+}
+
+/* Positions the options menu in top-right corner */
+#optionsMenu {
+    position: fixed;              /* Fixes position for constant visibility */
+    top: 20px;                    /* Sets 20px from top for spacing */
+    right: 20px;                  /* Sets 20px from right for spacing */
+    z-index: 30;                  /* High z-index to stay above most content */
+    display: none;                /* Hides by default, shown during game */
+}
+
+/* Styles the options menu icon */
+.options-icon {
+    width: 40px;                  /* Matches burger menu size for consistency */
+    height: 30px;                 /* Sets height for icon */
+    cursor: pointer;              /* Indicates interactivity */
+    display: flex;                /* Centers icon with flexbox */
+    align-items: center;          /* Vertically centers icon */
+    justify-content: center;      /* Horizontally centers icon */
+    position: relative;           /* Allows z-index to work */
+    z-index: 35;                  /* Higher than .options-panel for clickability */
+}
+
+/* Styles the image inside options icon */
+.options-icon .icon {
+    width: 40px;                  /* Resizes image to fit container */
+    height: 30px;                 /* Matches container height */
+    filter: invert(100%);         /* Inverts black to white for visibility */
+    transition: transform 0.3s ease; /* Smoothly animates rotation */
+}
+
+/* Rotates options icon when menu opens */
+#optionsMenu.open .options-icon .icon {
+    transform: rotate(90deg);     /* Rotates 90° to indicate open state */
+}
+
+/* Styles the options menu panel with a stylish Pac-Man design */
+.options-panel {
+    position: fixed;              /* Fixes position for sliding effect */
+    top: 0;                       /* Aligns to top of viewport */
+    left: 100%;                   /* Starts off-screen to the right */
+    width: 250px;                 /* Sets fixed width for menu */
+    height: 100%;                 /* Spans full viewport height */
+    background: linear-gradient(135deg, rgba(202, 181, 113, 0.9), rgba(0, 0, 0, 0.8)); /* Gradient from #CAB571 to black */
+    border-left: 5px solid #FFD700; /* Adds a gold (#FFD700) border for Pac-Man flair */
+    padding: 60px 20px 20px;      /* Adds padding: 60px top, 20px sides/bottom */
+    display: flex;                /* Stacks buttons vertically */
+    flex-direction: column;       /* Arranges buttons in a column */
+    transition: left 0.3s ease;   /* Smoothly animates sliding */
+    z-index: 25;                  /* Below .options-icon for clickability */
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.5); /* Adds a glowing gold shadow */
+}
+
+/* Slides options menu into view when open */
+#optionsMenu.open .options-panel {
+    left: calc(100% - 250px);     /* Slides in to align right edge with viewport */
+}
+
+/* Styles buttons inside options menu */
+.options-panel button {
+    margin: 10px 0;               /* Adds 10px vertical margin between buttons */
+    padding: 12px;                /* Sets 12px padding for click area */
+    font-size: 18px;              /* Uses 18px font for readability */
+    font-family: "Jaro";          /* Uses Jaro font */
+    color: white;                 /* White text */
+    background-color: rgb(202, 181, 113); /* Uses #CAB571 at 100% opacity */
+    border: none;                 /* Removes default border */
+    border-radius: 5px;           /* Rounds corners for soft look */
+    cursor: pointer;              /* Indicates interactivity */
+    transition: background-color 0.2s, transform 0.2s; /* Smooth hover effects */
+    display: flex;                /* Aligns icon and text horizontally */
+    align-items: center;          /* Centers icon and text vertically */
+    text-transform: uppercase;    /* Ensures uppercase text */
+    font-weight: bold;            /* Ensures bold text */
+}
+
+/* Hover effect for options menu buttons */
+.options-panel button:hover {
+    background-color: rgba(255, 215, 0, 0.8); /* Changes to gold (#FFD700) on hover */
+    transform: scale(1.05);       /* Slightly enlarges button */
+}
+
+/* Styles the icon inside options menu buttons */
+.options-panel .panel-icon {
+    width: 20px;                  /* Sets icon width to 20px */
+    height: 20px;                 /* Sets icon height to 20px */
+    margin-right: 10px;           /* Adds 10px spacing between icon and text */
+    filter: invert(100%);         /* Inverts black to white for visibility */
+}
+
+/* Styles the rules page - hidden by default */
+#rulesPage {
+    display: none;                /* Hidden by default, no !important so JS can override */
+    position: absolute;           /* Layers over other content */
+    top: 0;                       /* Aligns to top of viewport */
+    left: 0;                      /* Aligns to left of viewport */
+    width: 100%;                  /* Spans full viewport width */
+    height: 100%;                 /* Spans full viewport height */
+    display: flex;                /* Uses flexbox to center content */
+    flex-direction: column;       /* Stacks content vertically */
+    justify-content: center;      /* Centers content vertically */
+    align-items: center;          /* Centers .rules-box horizontally */
+    z-index: 20;                  /* Above main screen but below menus */
+}
+
+/* Styles the rules content box */
+.rules-box {
+    width: 500px;                 /* Sets fixed width for desktop */
+    padding: 20px;                /* Adds 20px padding for internal spacing */
+    background-color: rgba(202, 181, 113, 0.34); /* Uses #CAB571 at 34% opacity */
+    border-radius: 15px;          /* Rounds corners for soft look */
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5); /* Adds shadow for depth */
+    text-align: center;           /* Centers all text */
+    margin-left: auto;            /* Centers box horizontally */
+    margin-right: auto;           /* Completes horizontal centering */
+}
+
+/* Styles the rules page heading */
+.rules-box h2 {
+    color: white;                 /* White text */
+    font-size: 40px;              /* Large 40px font for desktop prominence */
+    margin-bottom: 20px;          /* Adds 20px spacing below heading */
+    text-shadow: 1px 1px 3px black; /* Adds shadow for readability */
+    font-family: "Jaro";          /* Uses Jaro font */
+    text-transform: uppercase;    /* Ensures uppercase text */
+    font-weight: bold;            /* Ensures bold text */
+}
+
+/* Styles the rules list */
+.rules-box ul {
+    list-style-type: none;        /* Removes default bullets */
+    padding: 0;                   /* Removes default padding */
+    color: white;                 /* White text */
+    font-size: 18px;              /* 18px font for desktop readability */
+    text-align: center;           /* Centers list items */
+    font-family: "Jaro";          /* Uses Jaro font */
+    text-transform: uppercase;    /* Ensures uppercase text */
+    font-weight: bold;            /* Ensures bold text */
+}
+
+/* Styles individual list items in rules */
+.rules-box li {
+    margin: 10px 0;               /* Adds 10px vertical margin between items */
+}
+
+/* Styles the return button on rules page */
+.rules-box button {
+    margin-top: 20px;             /* Adds 20px spacing above button */
+    padding: 10px 20px;           /* Sets padding for click area */
+    font-size: 18px;              /* 18px font for desktop */
+    font-family: "Jaro";          /* Uses Jaro font */
+    color: white;                 /* White text */
+    background-color: rgb(202, 181, 113); /* Uses #CAB571 at 100% opacity */
+    border: none;                 /* Removes default border */
+    border-radius: 10px;          /* Rounds corners for soft look */
+    cursor: pointer;              /* Indicates interactivity */
+    box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5); /* Adds shadow */
+    transition: transform 0.2s, background-color 0.2s; /* Smooth hover effects */
+    text-transform: uppercase;    /* Ensures uppercase text */
+    font-weight: bold;            /* Ensures bold text */
+}
+
+/* Hover effect for rules button */
+.rules-box button:hover {
+    transform: scale(1.05);       /* Slightly enlarges button */
+    background-color: rgba(255, 215, 0, 0.8); /* Changes to gold (#FFD700) on hover */
+}
+
+/* Styles the contact page - hidden by default */
+#contactPage {
+    display: none;                /* Hidden by default, no !important so JS can override */
+    position: absolute;           /* Layers over other content */
+    top: 0;                       /* Aligns to top */
+    left: 0;                      /* Aligns to left */
+    width: 100%;                  /* Full viewport width */
+    height: 100%;                 /* Full viewport height */
+    display: flex;                /* Uses flexbox to center content */
+    flex-direction: column;       /* Stacks content vertically */
+    justify-content: center;      /* Centers content vertically */
+    align-items: center;          /* Centers .contact-box horizontally */
+    z-index: 20;                  /* Above main screen */
+}
+
+/* Styles the contact content box */
+.contact-box {
+    width: 500px;                 /* Fixed width for desktop */
+    padding: 20px;                /* Adds padding */
+    background-color: rgba(202, 181, 113, 0.34); /* Uses #CAB571 at 34% opacity */
+    border-radius: 15px;          /* Rounds corners for soft look */
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5); /* Adds shadow */
+    text-align: center;           /* Centers text */
+    margin-left: auto;            /* Centers box horizontally */
+    margin-right: auto;           /* Completes horizontal centering */
+}
+
+/* Styles the contact page heading */
+.contact-box h2 {
+    color: white;                 /* White text */
+    font-size: 40px;              /* Large font for desktop */
+    margin-bottom: 20px;          /* Spacing below heading */
+    text-shadow: 1px 1px 3px black; /* Shadow for readability */
+    font-family: "Jaro";          /* Uses Jaro font */
+    text-transform: uppercase;    /* Ensures uppercase text */
+    font-weight: bold;            /* Ensures bold text */
+}
+
+/* Styles the contact form */
+.contact-box form {
+    display: flex;                /* Uses flexbox for layout */
+    flex-direction: column;       /* Stacks form elements vertically */
+    align-items: center;          /* Centers form elements horizontally */
+}
+
+/* Styles form labels */
+.contact-box label {
+    color: white;                 /* White text */
+    font-size: 18px;              /* 18px font for desktop */
+    margin: 10px 0 5px;           /* Spacing: 10px top, 5px bottom */
+    font-family: "Jaro";          /* Uses Jaro font */
+    text-transform: uppercase;    /* Ensures uppercase text */
+    font-weight: bold;            /* Ensures bold text */
+}
+
+/* Styles form inputs and textarea */
+.contact-box input,
+.contact-box textarea {
+    width: 100%;                  /* Full width of .contact-box */
+    padding: 8px;                 /* Adds padding for input area */
+    font-size: 16px;              /* 16px font for readability */
+    font-family: "Jaro";          /* Uses Jaro font */
+    border: 1px solid #ccc;       /* Light gray border */
+    border-radius: 5px;           /* Rounds corners */
+    box-sizing: border-box;       /* Includes padding in width */
+    color: white;                 /* White text */
+    background-color: rgba(0, 0, 0, 0.2); /* Slight dark tint for visibility */
+    text-transform: uppercase;    /* Ensures uppercase text */
+    font-weight: bold;            /* Ensures bold text */
+}
+
+/* Specific styles for textarea */
+.contact-box textarea {
+    resize: vertical;             /* Allows only vertical resizing */
+    min-height: 100px;            /* Sets minimum height for usability */
+}
+
+/* Styles the submit and return buttons on contact page */
+.contact-box button {
+    margin-top: 20px;             /* Spacing above button */
+    padding: 10px 20px;           /* Padding for click area */
+    font-size: 18px;              /* 18px font */
+    font-family: "Jaro";          /* Uses Jaro font */
+    color: white;                 /* White text */
+    background-color: rgb(202, 181, 113); /* Uses #CAB571 at 100% opacity */
+    border: none;                 /* No border */
+    border-radius: 10px;          /* Rounds corners for soft look */
+    cursor: pointer;              /* Indicates interactivity */
+    box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5); /* Adds shadow */
+    transition: transform 0.2s, background-color 0.2s; /* Smooth hover */
+    text-transform: uppercase;    /* Ensures uppercase text */
+    font-weight: bold;            /* Ensures bold text */
+}
+
+/* Hover effect for contact buttons */
+.contact-box button:hover {
+    transform: scale(1.05);       /* Enlarges button */
+    background-color: rgba(255, 215, 0, 0.8); /* Changes to gold (#FFD700) on hover */
+}
+
+/* Styles the ranking page - hidden by default */
+#rankingPage {
+    display: none;                /* Hidden by default, no !important so JS can override */
+    position: absolute;           /* Layers over content */
+    top: 0;                       /* Aligns to top */
+    left: 0;                      /* Aligns to left */
+    width: 100%;                  /* Full width */
+    height: 100%;                 /* Full height */
+    display: flex;                /* Uses flexbox to center content */
+    flex-direction: column;       /* Stacks content vertically */
+    justify-content: center;      /* Centers content vertically */
+    align-items: center;          /* Centers .ranking-box horizontally */
+    z-index: 20;                  /* Above main screen */
+}
+
+/* Styles the ranking content box (outer container) */
+.ranking-box {
+    width: 500px;                 /* Fixed width for desktop */
+    padding: 20px;                /* Adds padding */
+    background-color: rgba(202, 181, 113, 0.34); /* Uses #CAB571 at 34% opacity */
+    border-radius: 15px;          /* Rounds corners for soft look */
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5); /* Adds shadow */
+    text-align: center;           /* Centers text */
+    margin-left: auto;            /* Centers box horizontally */
+    margin-right: auto;           /* Completes horizontal centering */
+}
+
+/* Styles the ranking page heading */
+.ranking-box h2 {
+    color: white;                 /* White text */
+    font-size: 40px;              /* Large font for desktop */
+    margin-bottom: 20px;          /* Spacing below heading */
+    text-shadow: 1px 1px 3px black; /* Shadow for readability */
+    font-family: "Jaro";          /* Uses Jaro font */
+    text-transform: uppercase;    /* Ensures uppercase text */
+    font-weight: bold;            /* Ensures bold text */
+}
+
+/* Styles the ranking table container (inner box for player data) */
+.ranking-box .ranking-table-container {
+    background-color: rgba(217, 217, 217, 0.8); /* Uses #D9D9D9 at 80% opacity */
+    border-radius: 10px;          /* Rounds corners for soft look */
+    padding: 10px;                /* Adds internal padding */
+    margin-bottom: 20px;          /* Adds spacing below for button */
+}
+
+/* Styles the ranking table */
+.ranking-box table {
+    width: 100%;                  /* Full width of container */
+    border-collapse: collapse;    /* Removes spacing between cells */
+    color: white;                 /* White text */
+    font-size: 18px;              /* 18px font for desktop */
+    font-family: "Jaro";          /* Uses Jaro font */
+    text-transform: uppercase;    /* Ensures uppercase text */
+    font-weight: bold;            /* Ensures bold text */
+}
+
+/* Styles table headers */
+.ranking-box th {
+    background-color: rgb(163, 148, 101); /* Uses #A39465 for headers */
+    color: white;                 /* White text */
+    font-weight: bold;            /* Bold text for emphasis (redundant but kept) */
+    padding: 10px;                /* Adds padding */
+    border-bottom: 1px solid #ccc; /* Light gray border */
+}
+
+/* Styles table cells */
+.ranking-box td {
+    padding: 10px;                /* Adds padding */
+    border-bottom: 1px solid #ccc; /* Light gray border */
+}
+
+/* Styles the return button on ranking page */
+.ranking-box button {
+    margin-top: 20px;             /* Spacing above button */
+    padding: 10px 20px;           /* Padding for click area */
+    font-size: 18px;              /* 18px font */
+    font-family: "Jaro";          /* Uses Jaro font */
+    color: white;                 /* White text */
+    background-color: rgb(202, 181, 113); /* Uses #CAB571 at 100% opacity */
+    border: none;                 /* No border */
+    border-radius: 10px;          /* Rounds corners for soft look */
+    cursor: pointer;              /* Indicates interactivity */
+    box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5); /* Adds shadow */
+    transition: transform 0.2s, background-color 0.2s; /* Smooth hover */
+    text-transform: uppercase;    /* Ensures uppercase text */
+    font-weight: bold;            /* Ensures bold text */
+}
+
+/* Hover effect for ranking button */
+.ranking-box button:hover {
+    transform: scale(1.05);       /* Enlarges button */
+    background-color: rgba(255, 215, 0, 0.8); /* Changes to gold (#FFD700) on hover */
+}
+
+/* Mobile adjustments */
+@media screen and (max-width: 767px) {
+    #gameContainer {
+        padding: 2rem 0.5rem;     /* Maintains padding for canvas */
+    }
+
+    #gameCanvas {
+        max-width: 95%;           /* Limits canvas width */
+        max-height: 80vh;         /* Caps canvas height */
+    }
+
+    body {
+        font-size: 14px;          /* Reduces base font size */
+    }
+
+    #mainScreen {
+        justify-content: center;  /* Centers buttons vertically */
+        padding-top: 0;           /* No top padding since title is hidden */
+        padding-bottom: 5%;       /* Slight offset from exact center */
+    }
+
+    #mainScreen h1 {
+        display: none;            /* Hides title on mobile */
+    }
+
+    #mainScreen button {
+        width: 15rem;             /* Narrows buttons */
+        max-width: 80%;           /* Caps width */
+        padding: 1rem;            /* Sets padding */
+        margin: 0.5rem auto;      /* Centers buttons */
+        font-size: 1.2rem;        /* Adjusts font size */
+    }
+
+    #burgerMenu {
+        top: 10px;                /* Moves closer to top */
+        left: 10px;               /* Adds left offset */
+    }
+
+    .burger-icon {
+        width: 30px;              /* Reduces width */
+        height: 25px;             /* Reduces height */
+        margin-left: 0;           /* Aligns with parent */
+    }
+
+    .burger-icon span {
+        height: 3px;              /* Reduces bar thickness */
+    }
+
+    #burgerMenu.open .burger-icon span:nth-child(1) {
+        transform: translateY(11px) rotate(45deg); /* Adjusts X shape */
+    }
+
+    #burgerMenu.open .burger-icon span:nth-child(3) {
+        transform: translateY(-11px) rotate(-45deg); /* Adjusts X shape */
+    }
+
+    .menu-panel {
+        width: 70%;               /* Scales panel */
+        left: -80%;               /* Hides off-screen */
+        padding: 5rem 1rem 1rem;  /* Adjusts padding */
+    }
+
+    #burgerMenu.open .menu-panel {
+        left: 0;                  /* Slides into view */
+    }
+
+    .menu-panel button {
+        font-size: 0.9rem;        /* Reduces font */
+        padding: 0.8rem;          /* Reduces padding */
+        width: 80%;               /* Narrows buttons */
+        max-width: 12rem;         /* Caps width */
+        margin: 0.5rem auto;      /* Centers buttons */
+    }
+
+    #optionsMenu {
+        top: 10px;                /* Moves closer to top */
+        right: 10px;              /* Adds right offset */
+    }
+
+    .options-icon {
+        width: 30px;              /* Reduces width */
+        height: 25px;             /* Reduces height */
+    }
+
+    .options-icon .icon {
+        width: 30px;              /* Matches container */
+        height: 25px;             /* Matches container */
+    }
+
+    .options-panel {
+        width: 70%;               /* Scales panel */
+        left: 100%;               /* Hides off-screen */
+        padding: 5rem 1rem 1rem;  /* Adjusts padding */
+    }
+
+    #optionsMenu.open .options-panel {
+        left: calc(100% - 70%);   /* Slides into view */
+    }
+
+    .options-panel button {
+        font-size: 1rem;          /* Adjusts font */
+        padding: 0.8rem;          /* Reduces padding */
+        width: 80%;               /* Narrows buttons */
+        max-width: 12rem;         /* Caps width */
+        margin: 0.5rem auto;      /* Centers buttons */
+    }
+
+    .rules-box {
+        width: 80%;               /* Scales box */
+        max-width: 400px;         /* Caps width */
+        padding: 1rem;            /* Reduces padding */
+    }
+
+    .rules-box h2 {
+        font-size: 1.8rem;        /* Reduces heading */
+        margin-bottom: 0.8rem;    /* Tightens spacing */
+    }
+
+    .rules-box ul {
+        font-size: 0.9rem;        /* Reduces list font */
+    }
+
+    .rules-box li {
+        margin: 0.5rem 0;         /* Compacts items */
+    }
+
+    .rules-box button {
+        font-size: 0.9rem;        /* Reduces font */
+        padding: 0.6rem 1.2rem;   /* Reduces padding */
+        margin-top: 0.8rem;       /* Tightens spacing */
+    }
+
+    #contactPage {
+        justify-content: center;  /* Centers vertically */
+        align-items: center;      /* Centers horizontally */
+    }
+
+    .contact-box {
+        width: 70%;               /* Scales box */
+        max-width: 400px;         /* Caps width */
+        padding: 1rem;            /* Reduces padding */
+        margin-top: 15vh;         /* Positions lower */
+        margin-left: auto;        /* Centers horizontally */
+        margin-right: auto;       /* Completes centering */
+    }
+
+    .contact-box h2 {
+        font-size: 1.8rem;        /* Reduces heading */
+        margin-bottom: 0.8rem;    /* Tightens spacing */
+    }
+
+    .contact-box label {
+        font-size: 0.9rem;        /* Reduces font */
+        margin: 0.5rem 0 0.3rem;  /* Compacts spacing */
+    }
+
+    .contact-box input,
+    .contact-box textarea {
+        padding: 0.5rem;          /* Reduces padding */
+        font-size: 0.8rem;        /* Reduces font */
+    }
+
+    .contact-box textarea {
+        min-height: 5rem;         /* Adjusts height */
+    }
+
+    .contact-box button {
+        font-size: 0.9rem;        /* Reduces font */
+        padding: 0.6rem 1.2rem;   /* Reduces padding */
+        margin-top: 0.8rem;       /* Tightens spacing */
+    }
+
+    #rankingPage {
+        justify-content: center;  /* Centers vertically */
+        align-items: center;      /* Centers horizontally */
+    }
+
+    .ranking-box {
+        width: 90%;               /* Scales to 90% of viewport width */
+        max-width: 350px;         /* Caps at 350px for smaller screens */
+        padding: 1rem;            /* Reduces padding */
+        overflow-y: auto;         /* Allows scrolling if content overflows */
+    }
+
+    .ranking-box h2 {
+        font-size: 1.8rem;        /* Reduces heading */
+        margin-bottom: 0.8rem;    /* Tightens spacing */
+    }
+
+    .ranking-box .ranking-table-container {
+        padding: 0.5rem;          /* Reduces padding */
+        overflow-x: auto;         /* Allows horizontal scrolling if table is too wide */
+    }
+
+    .ranking-box table {
+        font-size: 0.8rem;        /* Reduces font size for mobile */
+        width: 100%;              /* Ensures table fits container */
+    }
+
+    .ranking-box th,
+    .ranking-box td {
+        padding: 0.4rem;          /* Reduces padding for tighter fit */
+        font-size: 0.8rem;        /* Matches table font size */
+        white-space: nowrap;      /* Prevents text wrapping */
+    }
+
+    .ranking-box button {
+        font-size: 0.9rem;        /* Reduces font */
+        padding: 0.6rem 1.2rem;   /* Reduces padding */
+        margin-top: 0.8rem;       /* Tightens spacing */
+    }
+}

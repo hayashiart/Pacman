@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:;">
+    <link rel="icon" href="./favicon.ico" type="image/x-icon">
+    <title>Pac-Man</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Burger Menu -->
+    <div id="burgerMenu">
+        <div class="burger-icon">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="menu-panel">
+            <button id="reinitialise">Reinitialise</button>
+            <button id="mainPage">Main Page</button>
+            <button id="menuRanking">Ranking</button>
+            <button id="menuContact">Contact</button>
+        </div>
+    </div>
+
+    <!-- Options Menu -->
+    <div id="optionsMenu">
+        <div class="options-icon">
+            <img src="./images/optionimage.png" alt="Options" class="icon">
+        </div>
+        <div class="options-panel">
+            <button id="pauseGame"><img src="images/pause.png" alt="Pause" class="panel-icon"> Pause</button>
+            <button id="toggleSound"><img src="images/sound.png" alt="Sound" class="panel-icon"> Sounds: On</button>
+        </div>
+    </div>
+
+    <!-- Main Screen -->
+    <div id="mainScreen">
+        <h1>Pac-Man</h1>
+        <button id="playGame1">Play Game 1</button>
+        <button id="playGame2">Play Game 2</button>
+        <button id="rules">Rules</button>
+        <button id="ranking">Ranking</button>
+        <button id="contact">Contact</button>
+    </div>
+
+    <!-- Rules Page -->
+    <div id="rulesPage">
+        <div class="rules-box">
+            <h2>Rules of Pacman</h2>
+            <ul>
+                <li>Use arrow keys to move Pacman around the maze.</li>
+                <li>Eat all the yellow dots to advance to the next level.</li>
+                <li>Avoid the ghosts—they’ll take a life if they catch you!</li>
+                <li>Eat a power dot (pink) to turn the tables—ghosts become edible for a short time.</li>
+                <li>Score points: 10 per dot, 50 per power dot, 200 per ghost eaten.</li>
+                <li>You have 3 lives. Lose them all, and it’s game over!</li>
+                <li>Finish all 3 levels to win and earn a time bonus.</li>
+            </ul>
+            <button id="closeRules">Return</button>
+        </div>
+    </div>
+
+    <!-- Contact Page -->
+    <div id="contactPage">
+        <div class="contact-box">
+            <h2>Contact Us</h2>
+            <form id="contactForm">
+                <label for="firstName">First Name:</label>
+                <input type="text" id="firstName" name="firstName" required>
+                <label for="lastName">Last Name:</label>
+                <input type="text" id="lastName" name="lastName" required>
+                <label for="dob">Date of Birth:</label>
+                <input type="date" id="dob" name="dob" required>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+                <label for="message">Message:</label>
+                <textarea id="message" name="message" rows="5" required></textarea>
+                <button type="submit" id="submitContact">Submit</button>
+            </form>
+            <button id="closeContact">Return</button>
+        </div>
+    </div>
+
+<!-- Ranking Page -->
+<div id="rankingPage">
+    <div class="ranking-box">
+        <h2>Top Rankings</h2>
+        <div class="ranking-table-container">
+            <table id="rankingTable">
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Name</th>
+                        <th>Score</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody id="rankingBody">
+                    <!-- Populated by JavaScript -->
+                </tbody>
+            </table>
+        </div>
+        <button id="closeRanking">Return</button>
+    </div>
+</div>
+
+    <!-- Game Container -->
+    <div id="gameContainer">
+        <canvas id="gameCanvas"></canvas>
+    </div>
+
+    <script src="src/Main.js" type="module"></script>
+</body>
+</html>
